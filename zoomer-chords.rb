@@ -1,67 +1,66 @@
-use_bpm 80
-use_synth :kalimba
-# Song: fx Shadow
-# VI +V I7 III
-define :shadow do
+use_bpm 170
+
+define :clean do
   
-  with_fx :echo do
-    shadow_chords = [
+  with_fx :reverb do
+    clean_chords = [
       chord(:A, :minor),
       chord(:D, :augmented),
       chord(:G, :major7),
       chord(:E, :minor),
-      
       chord(:A, :minor),
       chord(:Bb, :augmented),
       chord(:G, :major7),
-      chord(:E, :minor)
+      chord(:E, :minor),
+      chord(:Gb, :minor7),
+      chord(:B, :minor7),
+      chord(:E, :minor7),
+      chord(:B, :min),
+      chord(:Bb, :dim)
     ]
-    live_loop :loop_shadow do
-      use_synth :kalimba
+    live_loop :loop_clean do
+      use_synth :organ_tonewheel
       
-      for i in shadow_chords
+      for i in clean_chords
         play i
-        sleep 2
+        sleep 1.5
       end
     end
   end
 end
 
-# Zoomer Progression
-# IV V III VI
-define :zoom do
-  zoomer = [
-    chord(:F, :major),
-    chord(:G, :major),
-    chord(:E, :minor),
-  chord(:A, :minor) ]
+define :test do
+  use_sample_bpm :loop_amen
   
-  for i in zoomer
-    play i
-    sleep 1
+  with_fx :rlpf, cutoff: 10, cutoff_slide: 4 do |c|
+    live_loop :dnb do
+      #sample :bass_dnb_f, amp: 5
+      sample :loop_amen, amp: 5
+      sleep 1
+      control c, cutoff: rrand(40, 120), cutoff_slide: rrand(1, 4)
+    end
   end
 end
 
-
 in_thread do
-  shadow
+  clean
 end
 
 live_loop :drums do
   with_fx :reverb do
     sample :drum_heavy_kick
-    sleep 1
+    sleep 2
     sample :drum_snare_hard
-    sleep 1
+    sleep 2
     sample :drum_heavy_kick
-    sleep 1
+    sleep 2
     sample :drum_snare_hard
-    sleep 1
+    sleep 2
   end
 end
 
+# Greyl - Planetarium
 
-live_loop :highhat do
-  sample :drum_cymbal_closed
-  sleep 1
-end
+# F#m Bm7 E A
+# Edim F# A?
+# Bb dim A7
