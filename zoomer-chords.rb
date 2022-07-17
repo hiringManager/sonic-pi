@@ -2,6 +2,12 @@ use_bpm 170
 
 define :clean do
   
+# Greyl - Planetarium
+
+# F#m Bm7 E A
+# Edim F# A?
+# Bb dim A7
+  
   with_fx :reverb do
     clean_chords = [
       chord(:A, :minor),
@@ -59,8 +65,17 @@ live_loop :drums do
   end
 end
 
-# Greyl - Planetarium
-
-# F#m Bm7 E A
-# Edim F# A?
-# Bb dim A7
+# Zoomer Progression
+# IV V III VI
+define :zoom do
+  zoomer = [
+    chord(:F, :major),
+    chord(:G, :major),
+    chord(:E, :minor),
+  chord(:A, :minor) ]
+  
+  for i in zoomer
+    play i
+    sleep 1
+  end
+end
